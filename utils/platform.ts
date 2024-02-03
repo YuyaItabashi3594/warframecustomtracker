@@ -1,0 +1,1 @@
+export const platform = ["pc", "ps4", "xb1", "swi"]
