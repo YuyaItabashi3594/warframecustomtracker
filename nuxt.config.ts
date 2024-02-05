@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ["@nuxtjs/tailwindcss",'@vueuse/nuxt'],
+  modules: ["@nuxtjs/tailwindcss",'@vueuse/nuxt','@nuxtjs/i18n'],
   css: ["vuetify/lib/styles/main.sass"],
   build: {
     transpile: [

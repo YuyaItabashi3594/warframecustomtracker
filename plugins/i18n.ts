@@ -12,6 +12,5 @@ export default defineNuxtPlugin(({ vueApp }) => {
       jp
     }
   })
-
   vueApp.use(i18n)
 })

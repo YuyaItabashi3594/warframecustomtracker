@@ -1,3 +1,23 @@
 {
-  "Arbitration": "Arbitration"
+  "Arbitration": "Arbitration",
+
+  "Mercury": "Mercury",
+  "Venus": "Venus",
+  "Earth": "Earth",
+  "Lua": "Lua",
+  "Mars": "Mars",
+  "Deimos": "Deimos",
+  "Phobos": "Phobos",
+  "Ceres": "Ceres",
+  "Jupiter": "Jupiter",
+  "Europa": "Europa",
+  "Saturn": "Saturn",
+  "Uranus": "Uranus",
+  "Neptune": "Neptune",
+  "Pluto": "Pluto",
+  "Sedna": "Sedna",
+  "Eris": "Eris",
+  "Kuva Fortress": "Kuva Fortress",
+  "Void": "Void",
+  "Zariman": "Zariman"
 }
