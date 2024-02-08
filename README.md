@@ -1,3 +1,22 @@
+# WarframeCustomTracker
+
+Warframeというオンラインゲームにおいて，自分の好む時限式ミッションが出現しているかどうかを伝えてくれるWebアプリケーションです．
+
+## 機能（予定も含む）
+- 条件選択機能
+- 10分置きにAPIを叩いて情報を更新すると共に，Titleを動的に変更しタブの名前だけであるかどうかを教えてくれる
+- ローカルストレージに保存しているので，ユーザー登録なしで繰り返し使える
+- Vuetifyを駆使し，すっきりとしたデザイン
+- i18n（日本語と英語）
+
+ここからはメタ的な話
+
+## 目的
+- スキル向上＆ポートフォリオ　ポートフォリオになる出来かは分からない
+- Vue.js及びNuxt3の学習
+
+以下Nuxt3のテンプレート
+
 # Nuxt 3 Minimal Starter
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
