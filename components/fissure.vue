@@ -30,7 +30,7 @@ onMounted(() => {
 
 <template>
   <v-card>
-    <v-img height="200" src="/LithRelicIntact.png">
+    <v-img height="100" src="/LithRelicIntact.png">
       <v-card-title>Void Fissure</v-card-title>
     </v-img>
   </v-card>
