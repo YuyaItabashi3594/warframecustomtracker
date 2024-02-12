@@ -1,11 +1,9 @@
 <script setup>
-import { useI18n } from 'vue-i18n'
-import { set, useStorage } from '@vueuse/core'
-import { useDateFormat, useNow } from '@vueuse/core'
+import { useStorage } from '@vueuse/core'
+import { useDateFormat } from '@vueuse/core'
 
-const emit = defineEmits(['preferred-arbitration'])
+const emit = defineEmits(['preferred-arbitration-changed'])
 
-const { locale } = useI18n()
 const currentPlatform = ref(
   {
     name: 'pc',
@@ -33,15 +31,11 @@ const matchNode = (str) => {
   }
 }
 
-const removeDarkSector = (str) => {
-  return str.replace('Dark Sector ', '')
-}
-
 const enemyTypes = ['Grineer', 'Corpus', 'Infested', 'Orokin']
-const missions = ['Defence', 'Survival', 'Excavation', 'Interception', 'Defection', 'Infested Salvage', 'Disruption']
+const missions = ['Defense', 'Survival', 'Excavation', 'Interception', 'Defection', 'Infested Salvage', 'Disruption']
 
 const selectedArbitrationEnemyType = useStorage('selected-arbitration-enemy-type', ['Grineer', 'Corpus', 'Infested', 'Orokin'])
-const selectedArbitrationMission = useStorage('selected-arbitration-mission', ['Defence', 'Survival', 'Excavation', 'Interception', 'Defection', 'Infested Salvage', 'Disruption'])
+const selectedArbitrationMission = useStorage('selected-arbitration-mission', ['Defense', 'Survival', 'Excavation', 'Interception', 'Defection', 'Infested Salvage', 'Disruption'])
 
 const isPreferredArbitrationAvailable = computed(() => {
   if (!arbitrationData.value.enemy || !arbitrationData.value.type) {
@@ -63,7 +57,6 @@ const fetchArbitrationData = () => {
         successfulFetch.value = true
         node.value = matchNode(arbitrationData.value.node);
         arbitrationData.value.type = removeDarkSector(arbitrationData.value.type);
-        console.log(arbitrationData.value);
         currentTime.value = new Date()
         expireTime.value = new Date(arbitrationData.value.expiry)
         diff.value = expireTime.value - currentTime.value
@@ -91,23 +84,19 @@ onMounted(() => {
 }
 )
 
-watch(locale, () => {
-  const str = arbitrationData.value.node;
-  node.value = matchNode(str);
-})
 
 watch(isPreferredArbitrationAvailable, () => {
   if (isPreferredArbitrationAvailable.value === true) {
-    emit('preferred-arbitration', 1)
+    emit('preferred-arbitration-changed', 1)
   } else {
-    emit('preferred-arbitration', 0)
+    emit('preferred-arbitration-changed', 0)
   }
 })
 
 </script>
 
 <template>
-  <v-card>
+  <v-card max-height="450">
     <v-img class="mt-2" height="100" src="/ArbitarIconGrey.png">
       <v-card-title>Arbitration</v-card-title>
     </v-img>
@@ -127,7 +116,7 @@ watch(isPreferredArbitrationAvailable, () => {
         </template>
       </v-select>
     </div>
-    <div v-if="successfulFetch && isPreferredArbitrationAvailable" class="flex items-center">
+    <div v-if="successfulFetch && isPreferredArbitrationAvailable" class="grid grid-cols-2">
       <v-img height="150" :src="arbitrationData.enemy + '.png'">
       </v-img>
       <v-card variant="flat">
