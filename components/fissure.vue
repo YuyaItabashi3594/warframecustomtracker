@@ -115,7 +115,7 @@ watch(currentPlatform, () => {
 
 <template>
   <v-card>
-    <v-img class="mt-2" height="100" src="/Lith.png">
+    <v-img class="mt-2" height="100" src="/Lith.png" alt="Fissure Image">
       <v-card-title>{{ $t('Void Fissure') }}</v-card-title>
     </v-img>
     <v-expansion-panels class="mb-2">
@@ -160,7 +160,7 @@ watch(currentPlatform, () => {
         <tr v-for="fissure in preferredFissure" :key="fissure.id">
           <td>{{ $t(levelName(fissure)) }}</td>
           <td>
-            <v-img :src="`/${fissure.tier}.png`" height="50" />
+            <v-img :src="`/${fissure.tier}.png`" height="50" :alt="fissure.tier" />
           </td>
           <td>{{ $t(fissure.missionType) }}</td>
           <td>{{ fissure.eta }}</td>

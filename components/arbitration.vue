@@ -148,7 +148,7 @@ watch(isPreferredArbitrationAvailable, () => {
       </v-expansion-panel>
     </v-expansion-panels>
     <div v-if="successfulFetch && isPreferredArbitrationAvailable" class="grid grid-cols-2">
-      <v-img height="150" :src="arbitrationData.enemy + '.png'">
+      <v-img height="150" :src="arbitrationData.enemy + '.png'" :alt="arbitrationData.enemy">
       </v-img>
       <v-card variant="flat">
         <v-card-title>{{ $t(arbitrationData.type) }}</v-card-title>
@@ -162,7 +162,7 @@ watch(isPreferredArbitrationAvailable, () => {
     </div>
     <div v-else-if="failedFetch">
       <div class="flex items-center ml-4">
-        <v-img height="150" src="/Lotus.png"></v-img>
+        <v-img height="150" src="/Lotus.png" alt="Lotus"></v-img>
         <v-card variant="flat">
           <v-card-title>Failed to fetch data</v-card-title>
           <v-card-text>

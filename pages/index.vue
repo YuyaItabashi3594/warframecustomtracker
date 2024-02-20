@@ -17,7 +17,15 @@ const titleCount = computed(() =>
 );
 
 useHead({
-  title: () => titleCount.value
+  title: () => titleCount.value,
+  meta: [{
+    name: 'description',
+    content: 'Warframe Custom Tracker'
+  }]
+})
+
+useSeoMeta({
+  description: 'Warframe Custom Tracker tells you Arbitration,Fissure,Eidolon etc. available and you can customize your preferred missions.'
 })
 
 </script>
