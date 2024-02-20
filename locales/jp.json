@@ -1,5 +1,37 @@
 {
   "Arbitration":"仲裁",
+  "Void Fissure":"Void亀裂",
+
+  "Mission":"ミッション",
+  "Level":"レベル",
+  "Enemy":"敵",
+  "Relic":"レリック",
+  "Remaining Time":"残り時間",
+
+  "Normal":"通常",
+  "Steel Path":"鋼の道のり",
+  "Void Storm":"Void嵐",
+
+  "Capture": "確保",
+  "Defense": "防衛",
+  "Exterminate": "掃滅",
+  "Interception": "傍受",
+  "Mobile Defense": "機動防衛",
+  "Rescue": "救出",
+  "Sabotage": "妨害",
+  "Survival": "耐久",
+  "Spy": "潜入",
+  "Hijack": "ハイジャック",
+  "Infested Salvage": "感染回収",
+  "Disruption": "分裂",
+  "Excavation": "発掘",
+  "Defection": "脱出",
+
+  "Grineer": "グリニア",
+  "Corpus": "コーパス",
+  "Infested": "感染体",
+  "Orokin": "オロキン",
+  "Corrupted": "コラプト",
 
   "Mercury":"水星",
   "Venus":"金星",

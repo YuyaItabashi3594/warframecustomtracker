@@ -1,18 +1,18 @@
 <script setup>
 import { useStorage } from '@vueuse/core'
 
-const emit =defineEmits(['preferred-fissure-changed'])
+const emit = defineEmits(['preferred-fissure-changed'])
 
-const currentPlatform = ref(
-  {
-    name: 'pc',
-    icon: 'mdi-laptop',
-    url: 'pc'
-  }
-)
+const currentPlatform = useStorage('my-platform', {
+  name: 'pc',
+  icon: 'mdi-laptop',
+  url: 'pc'
+})
 
 const fissureData = ref({})
 const failedFetch = ref(false)
+const currentTime = ref(new Date())
+const diff = ref([])
 
 const relicTypes = ['Lith', 'Meso', 'Neo', 'Axi', 'Requiem']
 const missionTypes = ['Exterminate', 'Capture', 'Rescue', 'Sabotage', 'Mobile Defense', 'Defense', 'Survival', 'Interception', 'Spy', 'Hijack', 'Infested Salvage', 'Disruption', 'Excavation']
@@ -24,14 +24,13 @@ const selectedFissureMissionLevel = useStorage('selected-fissure-mission-level',
 
 const preferredFissure = computed(() => {
   if (!fissureData.value.length) {
-    console.log('No data')
     return []
-  } 
+  }
   else {
     const data = fissureData.value.filter(fissure => {
       return selectedFissureRelicType.value.some(relic => fissure.tier.includes(relic)) && selectedFissureMissionType.value.some(mission => fissure.missionType.includes(mission)) && selectedFissureMissionLevel.value.some(level => isSelectedLevelMatch(fissure, level))
     })
-    data.sort((a,b) => {
+    data.sort((a, b) => {
       if (a.isStorm !== b.isStorm) {
         return a.isStorm ? 1 : -1;
       }
@@ -43,7 +42,6 @@ const preferredFissure = computed(() => {
       }
       return 0;
     })
-    console.log(data)
     return data
   }
 })
@@ -68,11 +66,7 @@ const levelName = (fissure) => {
   }
 }
 
-onMounted(() => {
-  const storedValue = localStorage.getItem('my-platform') || 'pc'
-  if (storedValue) {
-    currentPlatform.value = JSON.parse(storedValue)
-  }
+const fetchFissureData = () => {
   fetch('https://api.warframestat.us/' + currentPlatform.value.url + '/fissures')
     .then(response => response.json())
     .then(data => {
@@ -83,64 +77,96 @@ onMounted(() => {
         fissureData.value.forEach(fissure => {
           fissure.missionType = removeDarkSector(fissure.missionType)
         })
-        console.log(fissureData.value)
+        calculateRemainingTime(fissureData.value)
       }
     })
+}
+
+const calculateRemainingTime = (fissure) => {
+  fissureData.value.forEach(fissure => {
+    const expire = new Date(fissure.expiry)
+    fissure.eta = useDateFormat(expire - currentTime.value, 'mm:ss')
+    if (expire - currentTime.value < 0) {
+      fissure.eta = 'Expired'
+    }
+  })
+}
+
+onMounted(() => {
+  fetchFissureData()
+  setInterval(() => {
+    fetchFissureData()
+  }, 600000)
+  setInterval(() => {
+    currentTime.value = new Date()
+    calculateRemainingTime(fissureData.value)
+  }, 1000)
 })
 
 watch(preferredFissure, () => {
-  emit('preferred-fissure-changed',preferredFissure.value.length)
+  emit('preferred-fissure-changed', preferredFissure.value.length)
+})
+
+watch(currentPlatform, () => {
+  fetchFissureData()
 })
 
 </script>
 
 <template>
   <v-card>
-    <v-img height="100" src="/Lith.png">
-      <v-card-title>Void Fissure</v-card-title>
+    <v-img class="mt-2" height="100" src="/Lith.png">
+      <v-card-title>{{ $t('Void Fissure') }}</v-card-title>
     </v-img>
-    <div class="flex flex-col mt-2">
-      <v-select v-model="selectedFissureRelicType" label="Relic" :items="relicTypes" multiple>
-        <template v-slot:selection="{ item, index }">
-          <v-chip>
-            <span>{{ item.title }}</span>
-          </v-chip>
+    <v-expansion-panels class="mb-2">
+      <v-expansion-panel title="Setting">
+        <template v-slot:text>
+          <div class="flex flex-col mt-2">
+            <v-select v-model="selectedFissureRelicType" :label="$t('Relic')" :items="relicTypes" multiple>
+              <template v-slot:selection="{ item, index }">
+                <v-chip>
+                  <span>{{ item.title }}</span>
+                </v-chip>
+              </template>
+            </v-select>
+            <v-select v-model="selectedFissureMissionType" :label="$t('Mission')" :items="missionTypes" multiple>
+              <template v-slot:selection="{ item, index }">
+                <v-chip>
+                  <span>{{ $t(item.title) }}</span>
+                </v-chip>
+              </template>
+            </v-select>
+            <v-select v-model="selectedFissureMissionLevel" :label="$t('Level')" :items="missionLevels" multiple>
+              <template v-slot:selection="{ item, index }">
+                <v-chip>
+                  <span>{{ $t(item.title) }}</span>
+                </v-chip>
+              </template>
+            </v-select>
+          </div>
         </template>
-      </v-select>
-      <v-select v-model="selectedFissureMissionType" label="Mission" :items="missionTypes" multiple>
-        <template v-slot:selection="{ item, index }">
-          <v-chip>
-            <span>{{ item.title }}</span>
-          </v-chip>
-        </template>
-      </v-select>
-      <v-select v-model="selectedFissureMissionLevel" label="Level" :items="missionLevels" multiple>
-        <template v-slot:selection="{ item, index }">
-          <v-chip>
-            <span>{{ item.title }}</span>
-          </v-chip>
-        </template>
-      </v-select>
-    </div>
+      </v-expansion-panel>
+    </v-expansion-panels>
+    <v-table v-if="preferredFissure.length" fixed-header height="400px">
+      <thead>
+        <tr>
+          <th class="text-left w-32">{{ $t('Level') }}</th>
+          <th class="text-center">{{ $t('Relic') }}</th>
+          <th class="text-left">{{ $t('Mission') }}</th>
+          <th class="text-left">{{ $t('Remaining Time') }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="fissure in preferredFissure" :key="fissure.id">
+          <td>{{ $t(levelName(fissure)) }}</td>
+          <td>
+            <v-img :src="`/${fissure.tier}.png`" height="50" />
+          </td>
+          <td>{{ $t(fissure.missionType) }}</td>
+          <td>{{ fissure.eta }}</td>
+        </tr>
+      </tbody>
+    </v-table>
+    <NoPreferredMission v-else />
   </v-card>
-  <v-table fixed-header height="500px">
-    <thead>
-      <tr>
-        <th class="text-left w-32">Level</th>
-        <th class="text-center">Relic</th>
-        <th class="text-left">Mission</th>
-        <th class="text-left">Time</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="fissure in preferredFissure" :key="fissure.id">
-        <td>{{ levelName(fissure) }}</td>
-        <td>
-          <v-img :src="`/${fissure.tier}.png`" height="50" />
-        </td>
-        <td>{{ fissure.missionType }}</td>
-        <td>{{ fissure.eta }}</td>
-      </tr>
-    </tbody>
-  </v-table>
 </template>

@@ -3,6 +3,11 @@ import { useI18n } from 'vue-i18n'
 import { useStorage } from '@vueuse/core'
 
 const { locale } = useI18n()
+if(locale.value.includes('ja')){
+  locale.value = 'jp'
+}else{
+  locale.value = 'en'
+}
 
 const currentPlatform = useStorage('my-platform', {
   name: 'pc',
@@ -38,11 +43,11 @@ onMounted(() => {
 
 <template>
   <div class="flex justify-center items-center gap-4 w-1/2 mx-auto">
-    <p class="text-slate-200 text-2xl">Warframe Custom Tracker</p>
-    <v-select v-model="locale" class="max-w-40 pt-4" density="comfortable" width="100" :items="languages"
+    <p class="text-slate-200 text-xl">Warframe Custom Tracker</p>
+    <v-select v-model="locale" class="min-w-32 pt-4" density="comfortable" width="100" :items="languages"
       item-title="name" item-value="value">
     </v-select>
-    <v-select v-model="currentPlatform" class="max-w-32 pt-4" density="comfortable" width="100"
+    <v-select v-model="currentPlatform" class="max-w-32 min-w-20 pt-4" density="comfortable" width="100"
       :items="platform">
       <template v-slot:selection>
         <v-icon v-if="isUpdatedFromLocalStorage">{{ currentPlatform.icon }}</v-icon>

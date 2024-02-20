@@ -1,5 +1,37 @@
 {
   "Arbitration": "Arbitration",
+  "Void Fissure": "Void Fissure",
+
+  "Mission": "Mission",
+  "Level": "Level",
+  "Enemy": "Enemy",
+  "Relic": "Relic",
+  "Remaining Time": "Remaining Time",
+
+  "Normal": "Normal",
+  "Steel Path": "Steel Path",
+  "Void Storm": "Void Storm",
+
+  "Capture": "Capture",
+  "Defense": "Defense",
+  "Exterminate": "Exterminate",
+  "Interception": "Interception",
+  "Mobile Defense": "Mobile Defense",
+  "Rescue": "Rescue",
+  "Sabotage": "Sabotage",
+  "Survival": "Survival",
+  "Spy": "Spy",
+  "Hijack": "Hijack",
+  "Infested Salvage": "Infested Salvage",
+  "Disruption": "Disruption",
+  "Excavation": "Excavation",
+  "Defection": "Defection",
+
+  "Grineer": "Grineer",
+  "Corpus": "Corpus",
+  "Infested": "Infested",
+  "Orokin": "Orokin",
+  "Corrupted": "Corrupted",
 
   "Mercury": "Mercury",
   "Venus": "Venus",

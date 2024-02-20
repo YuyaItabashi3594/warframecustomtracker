@@ -30,6 +30,7 @@ useHead({
       <div class="col-span-2">
         <Fissure @preferred-fissure-changed="changeFissureCount" />
       </div>
+      <Events />
     </div>
   </div>
 </template>
