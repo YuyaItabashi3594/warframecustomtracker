@@ -77,12 +77,11 @@ const fetchFissureData = () => {
         fissureData.value.forEach(fissure => {
           fissure.missionType = removeDarkSector(fissure.missionType)
         })
-        calculateRemainingTime(fissureData.value)
       }
     })
 }
 
-const calculateRemainingTime = (fissure) => {
+const calculateRemainingTime = () => {
   fissureData.value.forEach(fissure => {
     const expire = new Date(fissure.expiry)
     fissure.eta = useDateFormat(expire - currentTime.value, 'mm:ss')
