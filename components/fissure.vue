@@ -12,7 +12,6 @@ const currentPlatform = useStorage('my-platform', {
 const fissureData = ref({})
 const failedFetch = ref(false)
 const currentTime = ref(new Date())
-const diff = ref([])
 
 const relicTypes = ['Lith', 'Meso', 'Neo', 'Axi', 'Requiem']
 const missionTypes = ['Exterminate', 'Capture', 'Rescue', 'Sabotage', 'Mobile Defense', 'Defense', 'Survival', 'Interception', 'Spy', 'Hijack', 'Infested Salvage', 'Disruption', 'Excavation']
@@ -82,9 +81,14 @@ const fetchFissureData = () => {
 }
 
 const calculateRemainingTime = () => {
+  if (!fissureData.value.length) {
+    return
+  }
   fissureData.value.forEach(fissure => {
     const expire = new Date(fissure.expiry)
-    fissure.eta = useDateFormat(expire - currentTime.value, 'mm:ss')
+    if (fissure.era != 'Expired') {
+      fissure.eta = useDateFormat(expire - currentTime.value, 'mm:ss')
+    }
     if (expire - currentTime.value < 0) {
       fissure.eta = 'Expired'
     }
@@ -129,6 +133,7 @@ watch(currentPlatform, () => {
               </template>
             </v-select>
             <v-select v-model="selectedFissureMissionType" :label="$t('Mission')" :items="missionTypes" multiple>
+
               <template v-slot:selection="{ item, index }">
                 <v-chip>
                   <span>{{ $t(item.title) }}</span>
@@ -136,6 +141,7 @@ watch(currentPlatform, () => {
               </template>
             </v-select>
             <v-select v-model="selectedFissureMissionLevel" :label="$t('Level')" :items="missionLevels" multiple>
+
               <template v-slot:selection="{ item, index }">
                 <v-chip>
                   <span>{{ $t(item.title) }}</span>
