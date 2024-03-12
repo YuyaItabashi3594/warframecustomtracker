@@ -90,8 +90,10 @@ const calculateRemainingTime = () => {
       if (expire - currentTime.value < 0) {
         fissure.eta = 'Expired'
       } else {
-        const diff = useDateFormat(expire - currentTime.value, 'mm:ss')
-        fissure.eta = diff.value
+        const diff = new Date(expire - currentTime.value)
+        const minutesAndSeconds = useDateFormat(expire - currentTime.value, 'mm:ss')
+        const hours = diff.getUTCHours()
+        fissure.eta = hours + ':'+ minutesAndSeconds.value
       }
     }
 

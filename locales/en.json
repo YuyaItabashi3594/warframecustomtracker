@@ -2,6 +2,10 @@
   "Arbitration": "Arbitration",
   "Void Fissure": "Void Fissure",
 
+  "EidolonAvailable": "Eidolon is appearing now!",
+  "EidolonNotAvailable": "Eidolon is not appearing,Tenno.",
+  "untilEidolon": "Next Eidolon appears in",
+
   "Mission": "Mission",
   "Level": "Level",
   "Enemy": "Enemy",

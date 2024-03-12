@@ -2,6 +2,10 @@
   "Arbitration":"仲裁",
   "Void Fissure":"Void亀裂",
 
+  "EidolonAvailable": "エイドロン出現中です！",
+  "EidolonNotAvailable": "エイドロンは出現していません，テンノ。",
+  "untilEidolon": "エイドロン出現まで",
+
   "Mission":"ミッション",
   "Level":"レベル",
   "Enemy":"敵",

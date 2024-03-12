@@ -38,6 +38,7 @@ useSeoMeta({
       <div class="col-span-2">
         <Fissure @preferred-fissure-changed="changeFissureCount" />
       </div>
+      <Eidolon />
       <Events />
     </div>
   </div>

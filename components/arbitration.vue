@@ -70,8 +70,9 @@ onMounted(() => {
     if (diff.value < 0) {
       remainingTimer.value = 'Expired'
       isExpired.value = true
+      fetchArbitrationData()
     } else {
-      remainingTimer.value = useDateFormat(diff.value, 'mm:ss')
+      remainingTimer.value = useDateFormat(diff.value, 'mm:ss').value
     }
   }, 1000)
   setInterval(() => {
@@ -81,7 +82,6 @@ onMounted(() => {
 )
 
 watch(failedFetch, () => {
-  console.log('failed')
   var intervalId
   if (failedFetch.value === true) {
     intervalId = setInterval(() => {
@@ -95,7 +95,6 @@ watch(failedFetch, () => {
 })
 
 watch(isExpired, () => {
-  console.log('expired')
   var intervalId
   if (isExpired.value === true) {
     intervalId = setInterval(() => {
@@ -104,7 +103,6 @@ watch(isExpired, () => {
   } else {
     if (intervalId) {
       clearInterval(intervalId)
-      console.log('cleared')
     }
   }
 })
