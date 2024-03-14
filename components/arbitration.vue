@@ -56,9 +56,8 @@ const fetchArbitrationData = () => {
         successfulFetch.value = true
         node.value = matchNode(arbitrationData.value.node);
         arbitrationData.value.type = removeDarkSector(arbitrationData.value.type);
-        currentTime.value = new Date()
-        expireTime.value = new Date(arbitrationData.value.expiry)
-        diff.value = expireTime.value - currentTime.value
+        const expiry = new Date(arbitrationData.value.expiry)
+        remainingTimer.value = getRemainingTime(expiry)
       }
     })
 }
@@ -66,13 +65,10 @@ const fetchArbitrationData = () => {
 onMounted(() => {
   fetchArbitrationData()
   setInterval(() => {
-    diff.value = diff.value - 1000
-    if (diff.value < 0) {
-      remainingTimer.value = 'Expired'
+    const expiry = new Date(arbitrationData.value.expiry)
+    remainingTimer.value = getRemainingTime(expiry)
+    if(remainingTimer.value === 'Expired'){
       isExpired.value = true
-      fetchArbitrationData()
-    } else {
-      remainingTimer.value = useDateFormat(diff.value, 'mm:ss').value
     }
   }, 1000)
   setInterval(() => {

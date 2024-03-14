@@ -6,7 +6,6 @@ const emit = defineEmits(['eidolon-available'])
 
 const cetusData = ref({})
 const failedFetch = ref(false)
-const currentTime = ref(new Date())
 const isDay = ref(true)
 const remainingTime = ref()
 
@@ -30,12 +29,10 @@ const fetchCetusData = () => {
     })
 }
 
-const isIsDayChanged = () => {
+const cetusTimer = () => {
   const expiry = new Date(cetusData.value.expiry)
-  const diff = new Date(expiry - currentTime.value)
-  const formattedTime = useDateFormat(diff.getTime(), 'mm:ss')
-  remainingTime.value = diff.getUTCHours() + ':' + formattedTime.value
-  if (expiry < 0) {
+  remainingTime.value = getRemainingTime(expiry)
+  if(remainingTime.value === 'Expired'){
     fetchCetusData()
   }
 }
@@ -46,8 +43,7 @@ onMounted(() => {
     fetchCetusData()
   }, 600000)
   setInterval(() => {
-    currentTime.value = new Date()
-    isIsDayChanged()
+    cetusTimer()
   }, 1000)
 })
 </script>

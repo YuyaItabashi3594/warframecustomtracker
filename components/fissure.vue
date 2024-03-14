@@ -11,7 +11,6 @@ const currentPlatform = useStorage('my-platform', {
 
 const fissureData = ref({})
 const failedFetch = ref(false)
-const currentTime = ref(new Date())
 
 const relicTypes = ['Lith', 'Meso', 'Neo', 'Axi', 'Requiem']
 const missionTypes = ['Exterminate', 'Capture', 'Rescue', 'Sabotage', 'Mobile Defense', 'Defense', 'Survival', 'Interception', 'Spy', 'Hijack', 'Infested Salvage', 'Disruption', 'Excavation']
@@ -87,14 +86,7 @@ const calculateRemainingTime = () => {
   fissureData.value.forEach(fissure => {
     const expire = new Date(fissure.expiry)
     if (fissure.eta) {
-      if (expire - currentTime.value < 0) {
-        fissure.eta = 'Expired'
-      } else {
-        const diff = new Date(expire - currentTime.value)
-        const minutesAndSeconds = useDateFormat(expire - currentTime.value, 'mm:ss')
-        const hours = diff.getUTCHours()
-        fissure.eta = hours + ':'+ minutesAndSeconds.value
-      }
+      fissure.eta = getRemainingTime(expire)
     }
 
   })
@@ -106,7 +98,6 @@ onMounted(() => {
     fetchFissureData()
   }, 600000)
   setInterval(() => {
-    currentTime.value = new Date()
     calculateRemainingTime(fissureData.value)
   }, 1000)
 })
