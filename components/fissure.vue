@@ -12,12 +12,12 @@ const currentPlatform = useStorage('my-platform', {
 const fissureData = ref({})
 const failedFetch = ref(false)
 
-const relicTypes = ['Lith', 'Meso', 'Neo', 'Axi', 'Requiem']
-const missionTypes = ['Exterminate', 'Capture', 'Rescue', 'Sabotage', 'Mobile Defense', 'Defense', 'Survival', 'Interception', 'Spy', 'Hijack', 'Infested Salvage', 'Disruption', 'Excavation']
+const relicTypes = ['Lith', 'Meso', 'Neo', 'Axi', 'Requiem','Omnia']
+const missionTypes = ['Exterminate', 'Capture', 'Rescue', 'Sabotage', 'Mobile Defense', 'Defense', 'Survival', 'Interception', 'Spy', 'Hijack', 'Infested Salvage', 'Disruption', 'Excavation','Conjunction Survival','Void Flood','Void Cascade','Alchemy']
 const missionLevels = ['Normal', 'Steel Path', 'Void Storm']
 
-const selectedFissureRelicType = useStorage('selected-fissure-relic-type', ['Lith', 'Meso', 'Neo', 'Axi', 'Requiem'])
-const selectedFissureMissionType = useStorage('selected-fissure-mission-type', ['Exterminate', 'Capture', 'Rescue', 'Sabotage', 'Mobile Defense', 'Defense', 'Survival', 'Interception', 'Spy', 'Hijack', 'Infested Salvage', 'Disruption', 'Excavation'])
+const selectedFissureRelicType = useStorage('selected-fissure-relic-type', ['Lith', 'Meso', 'Neo', 'Axi', 'Requiem','Omnia'])
+const selectedFissureMissionType = useStorage('selected-fissure-mission-type', ['Exterminate', 'Capture', 'Rescue', 'Sabotage', 'Mobile Defense', 'Defense', 'Survival', 'Interception', 'Spy', 'Hijack', 'Infested Salvage', 'Disruption', 'Excavation','Conjunction Survival','Void Flood','Void Cascade','Alchemy'])
 const selectedFissureMissionLevel = useStorage('selected-fissure-mission-level', ['Normal', 'Steel Path', 'Void Storm'])
 
 const preferredFissure = computed(() => {
